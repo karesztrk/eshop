@@ -13,6 +13,7 @@ const errorHandler = (error, request, response, next) => {
       stack: process.env.NODE_ENV === 'production' ? null : error.stack,
     });
   }
+  next();
 };
 
 export { notFound, errorHandler };

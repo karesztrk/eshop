@@ -5,7 +5,8 @@ import generateToken from '../utils/generateToken.js';
 const authUser = expressAsyncHandler(async (request, response) => {
   const { email, password } = request.body;
   const user = await User.findOne({ email });
-  if (user && user.matchPassword(password)) {
+  const passwordMatch = await user.matchPassword(password);
+  if (user && passwordMatch) {
     response.json({
       _id: user._id,
       name: user.name,
@@ -28,6 +29,31 @@ const getUserProfile = expressAsyncHandler(async (request, response) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+    });
+  } else {
+    response.status(404);
+    throw new Error('User not found');
+  }
+});
+
+const updateUserProfile = expressAsyncHandler(async (request, response) => {
+  const user = await User.findById(request.user._id);
+
+  if (user) {
+    user.name = request.body.name || user.name;
+    user.email = request.body.email || user.email;
+    if (request.body.password) {
+      user.password = request.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    response.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
     });
   } else {
     response.status(404);
@@ -64,4 +90,4 @@ const registerUser = expressAsyncHandler(async (request, response) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser };
+export { authUser, getUserProfile, registerUser, updateUserProfile };
