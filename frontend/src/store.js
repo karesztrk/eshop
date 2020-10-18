@@ -29,9 +29,15 @@ const cartItemsFromStroage = localStorage.getItem('cartItems')
 const userInfoFromStroage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
+const shippingAddressFromStroage = localStorage.getItem('shippingAddress')
+  ? JSON.parse(localStorage.getItem('shippingAddress'))
+  : {};
 
 const initalState = {
-  cart: { cartItems: cartItemsFromStroage },
+  cart: {
+    cartItems: cartItemsFromStroage,
+    shippingAddress: shippingAddressFromStroage,
+  },
   userLogin: {
     userInfo: userInfoFromStroage,
   },
