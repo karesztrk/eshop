@@ -26,4 +26,13 @@ const protect = expressAsyncHandler(async (request, response, next) => {
   }
 });
 
-export { protect };
+const admin = (request, response, next) => {
+  if (request.user && request.user.isAdmin) {
+    next();
+  } else {
+    response.status(401);
+    throw new Error('Not authorized as an admin');
+  }
+};
+
+export { protect, admin };

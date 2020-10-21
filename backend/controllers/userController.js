@@ -90,4 +90,15 @@ const registerUser = expressAsyncHandler(async (request, response) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, updateUserProfile };
+const getAllUsers = expressAsyncHandler(async (request, response) => {
+  const users = await User.find();
+  response.json(users);
+});
+
+export {
+  authUser,
+  getUserProfile,
+  registerUser,
+  updateUserProfile,
+  getAllUsers,
+};
