@@ -25,7 +25,7 @@ const ProfileScreen = ({ location, history }) => {
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
-    } else if (!user.name) {
+    } else if (!user || !user.name) {
       dispatch(getUserDetails('profile'));
       dispatch(listMyOrders());
     } else {
