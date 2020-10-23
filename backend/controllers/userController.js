@@ -95,10 +95,56 @@ const getAllUsers = expressAsyncHandler(async (request, response) => {
   response.json(users);
 });
 
+const deleteUser = expressAsyncHandler(async (request, response) => {
+  const user = await User.findById(request.params.id);
+  if (user) {
+    await user.remove();
+    response.json({ message: 'User removed' });
+  } else {
+    response.status(404);
+    throw new Error('User not fuond');
+  }
+});
+
+const getUserById = expressAsyncHandler(async (request, response) => {
+  const user = await User.findById(request.params.id).select('-password');
+  if (user) {
+    response.json(user);
+  } else {
+    response.status(404);
+    throw new Error('User not fuond');
+  }
+});
+
+const updateUser = expressAsyncHandler(async (request, response) => {
+  const user = await User.findById(request.params.id);
+
+  if (user) {
+    user.name = request.body.name || user.name;
+    user.email = request.body.email || user.email;
+    user.isAdmin = request.body.isAdmin;
+
+    const updatedUser = await user.save();
+
+    response.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    response.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   authUser,
   getUserProfile,
   registerUser,
   updateUserProfile,
   getAllUsers,
+  deleteUser,
+  getUserById,
+  updateUser,
 };
