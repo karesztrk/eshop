@@ -25,7 +25,7 @@ const OrderScreen = ({ match, history }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
 
   const orderPay = useSelector((state) => state.orderPay);

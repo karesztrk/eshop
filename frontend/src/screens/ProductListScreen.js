@@ -17,7 +17,7 @@ const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, pages, page } = productList;
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
   const productDelete = useSelector((state) => state.productDelete);
   const {

@@ -37,7 +37,7 @@ const ProductScreen = ({
     success: successProductReview,
     error: errorProductReview,
   } = useSelector((state) => state.productReviewCreate);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userInfo } = useSelector((state) => state.user.userLogin);
   useEffect(() => {
     if (successProductReview) {
       alert('Review Submitted!');

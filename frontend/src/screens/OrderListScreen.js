@@ -10,7 +10,7 @@ const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {

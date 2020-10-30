@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { LinkContainer } from 'react-router-bootstrap';
-import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
-import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import { userUpdateProfileReset, getUserDetails, updateUserProfile } from '../slices/userSlice';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -15,11 +14,11 @@ const ProfileScreen = ({ location, history }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.userDetails);
+  const userDetails = useSelector((state) => state.user.userDetails);
   const { loading, error, user } = userDetails;
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const userUpdateProfile = useSelector((state) => state.user.userUpdateProfile);
   const { success } = userUpdateProfile;
   const orderListMy = useSelector((state) => state.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
@@ -27,9 +26,7 @@ const ProfileScreen = ({ location, history }) => {
     if (!userInfo) {
       history.push('/login');
     } else if (!user || !user.name || success) {
-      dispatch({
-        type: USER_UPDATE_PROFILE_RESET,
-      });
+      dispatch(userUpdateProfileReset());
       dispatch(getUserDetails('profile'));
       dispatch(listMyOrders());
     } else {

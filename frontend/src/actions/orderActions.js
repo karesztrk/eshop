@@ -26,7 +26,9 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
@@ -57,7 +59,9 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       type: ORDER_DETAILS_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
@@ -90,7 +94,9 @@ export const payOrder = (orderId, paymentResult) => async (
       type: ORDER_PAY_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
@@ -125,7 +131,9 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
       type: ORDER_DELIVER_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
@@ -159,7 +167,9 @@ export const listMyOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_MY_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
@@ -189,7 +199,9 @@ export const listOrders = () => async (dispatch, getState) => {
       type: ORDER_LIST_REQUEST,
     });
     const {
-      userLogin: { userInfo },
+      user: {
+        userLogin: { userInfo },
+      },
     } = getState();
     const config = {
       headers: {
