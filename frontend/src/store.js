@@ -8,7 +8,6 @@ import {
   productReviewCreateReducer,
   productTopRatedReducer,
 } from './slices/productReducers';
-import { cartReducer } from './slices/cartReducers';
 import { userSlice } from './slices/userSlice';
 import {
   orderCreateReducer,
@@ -18,11 +17,12 @@ import {
   orderListReducer,
   orderPayReducer,
 } from './slices/orderReducers';
+import { cartSlice } from './slices/cartSlice';
 
 const reducer = {
   productList: productListReducer,
   productDetails: productDetailsReducer,
-  cart: cartReducer,
+  cart: cartSlice.reducer,
   user: userSlice.reducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
@@ -35,26 +35,6 @@ const reducer = {
   orderList: orderListReducer,
   productReviewCreate: productReviewCreateReducer,
   productTopRated: productTopRatedReducer,
-};
-
-const cartItemsFromStroage = localStorage.getItem('cartItems')
-  ? JSON.parse(localStorage.getItem('cartItems'))
-  : [];
-const userInfoFromStroage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
-  : null;
-const shippingAddressFromStroage = localStorage.getItem('shippingAddress')
-  ? JSON.parse(localStorage.getItem('shippingAddress'))
-  : {};
-
-const initalState = {
-  cart: {
-    cartItems: cartItemsFromStroage,
-    shippingAddress: shippingAddressFromStroage,
-  },
-  userLogin: {
-    userInfo: userInfoFromStroage,
-  },
 };
 
 const middleware = [...getDefaultMiddleware()];

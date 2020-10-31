@@ -2,8 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants';
 
+const userInfoFromStroage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
+
 const initialState = {
-  userLogin: {},
+  userLogin: {
+    userInfo: userInfoFromStroage,
+  },
   userRegister: {},
   userDetails: { user: {} },
   userUpdateProfile: {},
