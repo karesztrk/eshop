@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ORDER_LIST_MY_RESET } from '../constants/orderConstants';
+import { orderListMyReset } from './orderSlice';
 
 const userInfoFromStroage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
@@ -34,7 +34,9 @@ export const userSlice = createSlice({
       state.userLogin.loading = false;
       state.userLogin.userInfo = payload;
     },
-    userLogout: () => {},
+    userLogout: (state) => {
+      state.userLogin = {};
+    },
     // Register
     userRegisterRequest: (state) => {
       state.userRegister.loading = true;
@@ -190,9 +192,7 @@ export const logout = () => async (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch(userLogout());
   dispatch(userDetailsReset());
-  dispatch({
-    type: ORDER_LIST_MY_RESET,
-  });
+  dispatch(orderListMyReset());
   dispatch(userListReset());
 };
 

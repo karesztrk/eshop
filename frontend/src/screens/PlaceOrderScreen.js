@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
 import { Link } from 'react-router-dom';
-import { createOrder } from '../actions/orderActions';
+import { createOrder } from '../slices/orderSlice';
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const PlaceOrderScreen = ({ history }) => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
-  const orderCreate = useSelector((state) => state.orderCreate);
+  const orderCreate = useSelector((state) => state.order.orderCreate);
   const { order, success, error } = orderCreate;
   useEffect(() => {
     if (order && success) {

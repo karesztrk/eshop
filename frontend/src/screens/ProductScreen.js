@@ -31,7 +31,7 @@ const ProductScreen = ({
   const [comment, setComment] = useState('');
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails,
+    (state) => state.product.productDetails,
   );
   const {
     success: successProductReview,

@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { LinkContainer } from 'react-router-bootstrap';
-import { listMyOrders } from '../actions/orderActions';
-import { userUpdateProfileReset, getUserDetails, updateUserProfile } from '../slices/userSlice';
+import { listMyOrders } from '../slices/orderSlice';
+import {
+  userUpdateProfileReset,
+  getUserDetails,
+  updateUserProfile,
+} from '../slices/userSlice';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -18,9 +22,11 @@ const ProfileScreen = ({ location, history }) => {
   const { loading, error, user } = userDetails;
   const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
-  const userUpdateProfile = useSelector((state) => state.user.userUpdateProfile);
+  const userUpdateProfile = useSelector(
+    (state) => state.user.userUpdateProfile,
+  );
   const { success } = userUpdateProfile;
-  const orderListMy = useSelector((state) => state.orderListMy);
+  const orderListMy = useSelector((state) => state.order.orderListMy);
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
   useEffect(() => {
     if (!userInfo) {
