@@ -8,13 +8,11 @@ import {
   getOrderDetails,
   payOrder,
   deliverOrder,
-} from '../actions/orderActions';
+  orderPayReset,
+  orderDeliverReset,
+} from '../slices/orderSlice';
 import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
-import {
-  ORDER_PAY_RESET,
-  ORDER_DELIVER_RESET,
-} from '../constants/orderConstants';
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
@@ -22,21 +20,22 @@ const OrderScreen = ({ match, history }) => {
   const [sdkReady, setSdkReady] = useState(false);
 
   const dispatch = useDispatch();
-  const orderDetails = useSelector((state) => state.orderDetails);
+  const orderDetails = useSelector((state) => state.order.orderDetails);
   const { order, loading, error } = orderDetails;
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
 
-  const orderPay = useSelector((state) => state.orderPay);
+  const orderPay = useSelector((state) => state.order.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
-  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const orderDeliver = useSelector((state) => state.order.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
+  let itemsPrice = '';
   if (!loading && order) {
     const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2);
-    order.itemsPrice = addDecimals(
+    itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0),
     );
   }
@@ -56,12 +55,8 @@ const OrderScreen = ({ match, history }) => {
     };
 
     if (!order || order._id !== orderId || successPay || successDeliver) {
-      dispatch({
-        type: ORDER_PAY_RESET,
-      });
-      dispatch({
-        type: ORDER_DELIVER_RESET,
-      });
+      dispatch(orderPayReset());
+      dispatch(orderDeliverReset());
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -173,7 +168,7 @@ const OrderScreen = ({ match, history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>${itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

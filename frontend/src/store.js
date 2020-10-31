@@ -1,84 +1,21 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {
-  productDetailsReducer,
-  productListReducer,
-  productDeleteReducer,
-  productCreateReducer,
-  productUpdateReducer,
-  productReviewCreateReducer,
-  productTopRatedReducer,
-} from './reducers/productReducers';
-import { cartReducer } from './reducers/cartReducers';
-import {
-  userDeleteReducer,
-  userDetailsReducer,
-  userListReducer,
-  userLoginReducer,
-  userRegisterReducer,
-  userUpdateProfileReducer,
-  userUpdateReducer,
-} from './reducers/userReducers';
-import {
-  orderCreateReducer,
-  orderDeliverReducer,
-  orderDetailsReducer,
-  orderListMyReducer,
-  orderListReducer,
-  orderPayReducer,
-} from './reducers/orderReducers';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { userSlice } from './slices/userSlice';
+import { cartSlice } from './slices/cartSlice';
+import { productSlice } from './slices/productSlice';
+import { orderSlice } from './slices/orderSlice';
 
-const reducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
-  cart: cartReducer,
-  userLogin: userLoginReducer,
-  userRegister: userRegisterReducer,
-  userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
-  userList: userListReducer,
-  orderCreate: orderCreateReducer,
-  orderDetails: orderDetailsReducer,
-  orderPay: orderPayReducer,
-  orderDeliver: orderDeliverReducer,
-  orderListMy: orderListMyReducer,
-  userDelete: userDeleteReducer,
-  userUpdate: userUpdateReducer,
-  productDelete: productDeleteReducer,
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
-  orderList: orderListReducer,
-  productReviewCreate: productReviewCreateReducer,
-  productTopRated: productTopRatedReducer,
-});
-
-const cartItemsFromStroage = localStorage.getItem('cartItems')
-  ? JSON.parse(localStorage.getItem('cartItems'))
-  : [];
-const userInfoFromStroage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
-  : null;
-const shippingAddressFromStroage = localStorage.getItem('shippingAddress')
-  ? JSON.parse(localStorage.getItem('shippingAddress'))
-  : {};
-
-const initalState = {
-  cart: {
-    cartItems: cartItemsFromStroage,
-    shippingAddress: shippingAddressFromStroage,
-  },
-  userLogin: {
-    userInfo: userInfoFromStroage,
-  },
+const reducer = {
+  product: productSlice.reducer,
+  cart: cartSlice.reducer,
+  user: userSlice.reducer,
+  order: orderSlice.reducer,
 };
 
-const middleware = [thunk];
+const middleware = [...getDefaultMiddleware()];
 
-const store = createStore(
+const store = configureStore({
   reducer,
-  initalState,
-  composeWithDevTools(applyMiddleware(...middleware)),
-);
+  middleware,
+});
 
 export default store;

@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { LinkContainer } from 'react-router-bootstrap';
-import { deleteUser, listUsers } from '../actions/userActions';
+import { deleteUser, listUsers } from '../slices/userSlice';
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
-  const userList = useSelector((state) => state.userList);
+  const userList = useSelector((state) => state.user.userList);
   const { loading, error, users } = userList;
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
-  const userDelete = useSelector((state) => state.userDelete);
+  const userDelete = useSelector((state) => state.user.userDelete);
   const { success: successDelete } = userDelete;
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {

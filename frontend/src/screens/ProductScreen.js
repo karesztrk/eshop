@@ -13,11 +13,11 @@ import Rating from '../components/Rating';
 import {
   listProductDetails,
   createProductReview,
-} from '../actions/productActions';
+  productReviewCreateReset,
+} from '../slices/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 import Meta from '../components/Meta';
 
 const ProductScreen = ({
@@ -31,21 +31,19 @@ const ProductScreen = ({
   const [comment, setComment] = useState('');
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails,
+    (state) => state.product.productDetails,
   );
   const {
     success: successProductReview,
     error: errorProductReview,
-  } = useSelector((state) => state.productReviewCreate);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  } = useSelector((state) => state.product.productReviewCreate);
+  const { userInfo } = useSelector((state) => state.user.userLogin);
   useEffect(() => {
     if (successProductReview) {
       alert('Review Submitted!');
       setRating(0);
       setComment('');
-      dispatch({
-        type: PRODUCT_CREATE_REVIEW_RESET,
-      });
+      dispatch(productReviewCreateReset());
     }
     dispatch(listProductDetails(id));
   }, [id, dispatch, successProductReview]);

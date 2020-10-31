@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { LinkContainer } from 'react-router-bootstrap';
-import { listOrders } from '../actions/orderActions';
+import { listOrders } from '../slices/orderSlice';
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
-  const orderList = useSelector((state) => state.orderList);
+  const orderList = useSelector((state) => state.order.orderList);
   const { loading, error, orders } = orderList;
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {

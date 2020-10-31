@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions.js';
+import { listProducts } from '../slices/productSlice';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
 import Message from '../components/Message';
@@ -15,7 +15,7 @@ const HomeScreen = ({ match }) => {
 
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
-  const productList = useSelector((state) => state.productList);
+  const productList = useSelector((state) => state.product.productList);
   const { loading, error, products, pages, page } = productList;
 
   useEffect(() => {

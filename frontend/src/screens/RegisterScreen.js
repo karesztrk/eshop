@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { register } from '../actions/userActions';
+import { register } from '../slices/userSlice';
 import { Link } from 'react-router-dom';
 
 const RegisterScreen = ({ location, history }) => {
@@ -14,7 +14,7 @@ const RegisterScreen = ({ location, history }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
+  const userRegister = useSelector((state) => state.user.userRegister);
   const { loading, error, userInfo } = userRegister;
   const redirect = location.search ? location.search.split('=')[1] : '/';
   useEffect(() => {
