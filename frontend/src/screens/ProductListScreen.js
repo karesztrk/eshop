@@ -9,23 +9,23 @@ import {
   listProducts,
   deleteProduct,
   createProduct,
-} from '../actions/productActions';
-import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
+  productCreateReset,
+} from '../slices/productSlice';
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList);
+  const productList = useSelector((state) => state.product.productList);
   const { loading, error, products, pages, page } = productList;
   const userLogin = useSelector((state) => state.user.userLogin);
   const { userInfo } = userLogin;
-  const productDelete = useSelector((state) => state.productDelete);
+  const productDelete = useSelector((state) => state.product.productDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-  const productCreate = useSelector((state) => state.productCreate);
+  const productCreate = useSelector((state) => state.product.productCreate);
   const {
     loading: loadingCreate,
     error: errorCreate,
@@ -33,9 +33,7 @@ const ProductListScreen = ({ history, match }) => {
     product: createdProduct,
   } = productCreate;
   useEffect(() => {
-    dispatch({
-      type: PRODUCT_CREATE_RESET,
-    });
+    dispatch(productCreateReset());
     if (!userInfo.isAdmin) {
       history.push('/login');
     }

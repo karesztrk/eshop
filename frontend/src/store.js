@@ -1,13 +1,4 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import {
-  productDetailsReducer,
-  productListReducer,
-  productDeleteReducer,
-  productCreateReducer,
-  productUpdateReducer,
-  productReviewCreateReducer,
-  productTopRatedReducer,
-} from './slices/productReducers';
 import { userSlice } from './slices/userSlice';
 import {
   orderCreateReducer,
@@ -18,10 +9,10 @@ import {
   orderPayReducer,
 } from './slices/orderReducers';
 import { cartSlice } from './slices/cartSlice';
+import { productSlice } from './slices/productSlice';
 
 const reducer = {
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
+  product: productSlice.reducer,
   cart: cartSlice.reducer,
   user: userSlice.reducer,
   orderCreate: orderCreateReducer,
@@ -29,12 +20,7 @@ const reducer = {
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
-  productDelete: productDeleteReducer,
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
   orderList: orderListReducer,
-  productReviewCreate: productReviewCreateReducer,
-  productTopRated: productTopRatedReducer,
 };
 
 const middleware = [...getDefaultMiddleware()];

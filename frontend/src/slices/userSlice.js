@@ -34,7 +34,7 @@ export const userSlice = createSlice({
       state.userLogin.loading = false;
       state.userLogin.userInfo = payload;
     },
-    userLogout: (state) => {},
+    userLogout: () => {},
     // Register
     userRegisterRequest: (state) => {
       state.userRegister.loading = true;
@@ -60,7 +60,9 @@ export const userSlice = createSlice({
       state.userDetails.user = payload;
     },
     userDetailsReset: (state) => {
-      state.userDetails.user = {};
+      state.userDetails = {
+        user: {},
+      };
     },
     // Update profile
     userUpdateProfileRequest: (state) => {
@@ -91,7 +93,9 @@ export const userSlice = createSlice({
       state.userList.users = payload;
     },
     userListReset: (state) => {
-      state.userList.users = [];
+      state.userList = {
+        users: [],
+      };
     },
     // User delete
     userDeleteRequest: (state) => {
@@ -118,7 +122,9 @@ export const userSlice = createSlice({
       state.userUpdate.success = true;
     },
     userUpdateReset: (state) => {
-      state.userUpdate.user = {};
+      state.userUpdate = {
+        user: {},
+      };
     },
   },
 });

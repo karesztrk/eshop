@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { listProductDetails, updateProduct } from '../actions/productActions';
+import {
+  listProductDetails,
+  updateProduct,
+  productUpdateReset,
+} from '../slices/productSlice';
 import { Link } from 'react-router-dom';
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
@@ -21,9 +24,9 @@ const ProductEditScreen = ({ match, history }) => {
   const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
-  const productDetails = useSelector((state) => state.productDetails);
+  const productDetails = useSelector((state) => state.product.productDetails);
   const { product, error, loading } = productDetails;
-  const productUpdate = useSelector((state) => state.productUpdate);
+  const productUpdate = useSelector((state) => state.product.productUpdate);
   const {
     success: successUpdate,
     error: errorUpdate,
@@ -32,7 +35,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch({ type: PRODUCT_UPDATE_RESET });
+      dispatch(productUpdateReset());
       history.push('/admin/productlist');
     } else {
       if (!product.name || product._id !== productId) {
